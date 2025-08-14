@@ -1,0 +1,49 @@
+# Arquivo .gitignore para Projeto Django
+
+# Ambiente Virtual
+# Ignora a pasta do ambiente virtual para não enviar todas as bibliotecas.
+.venv/
+venv/
+env/
+
+# Arquivos de Cache e Compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Metadados de IDEs e Editores
+.idea/
+.vscode/
+*.swp
+
+# Banco de Dados
+# Ignora o banco de dados SQLite local, se estiver usando.
+*.sqlite3
+db.sqlite3
+
+# Arquivos Estáticos e de Mídia
+# Ignora as pastas onde o Django coleta os arquivos estáticos e de mídia.
+/static/
+/media/
+
+# Logs
+*.log
+logs/
+
+# Arquivos de Testes e Cobertura
+.coverage
+.coverage.*
+htmlcov/
+pytest_cache/
+.pytest_cache/
+
+# Arquivos de Build e Distribuição do Python
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
