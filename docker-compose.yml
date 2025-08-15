@@ -1,14 +1,13 @@
 services:
   pg-inspect:
     image: postgres:14
-    container_name: pg-inspect
-    environment:
-      - POSTGRES_PASSWORD=123456
+    container_name: sghss
     ports:
-      - "5433:5432"
-    volumes:
-      - compose_db-data:/var/lib/postgresql/data
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=sghs
 
-volumes:
-  compose_db-data:
-    external: true
+networks:
+  backend:

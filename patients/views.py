@@ -10,16 +10,9 @@ from .filters import PatientFilter, MedicalRecordFilter
 class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    # Adicionando os backends de filtro e ordenação
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_class = PatientFilter
-
-    # Campos pelos quais a API pode ser ordenada
-    ordering_fields = ['id', 'name', 'birth_date', 'created_at']
-    # Ordenação padrão
-    ordering = ['-created_at']
+    filter_class = PatientFilter
+    ordering_fields = '__all__'
+    ordering = ['created_at']
 
 
 class MedicalRecordViewSet(viewsets.ModelViewSet):

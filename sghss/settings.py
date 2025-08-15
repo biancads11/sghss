@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_filters'
-    'rest_framework',
-    'corsheaders',
     'core.apps.CoreConfig',
     'patients.apps.PatientsConfig',
     'professionals.apps.ProfessionalsConfig',
@@ -54,10 +51,10 @@ INSTALLED_APPS = [
     'inventory.apps.InventoryConfig',
     'telemedicine.apps.TelemedicineConfig',
     'administration.apps.AdministrationConfig',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
