@@ -1,7 +1,22 @@
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, Group
 from django.db import models
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
 
-# User's requested BaseModel, with 'updated_at' corrected to use auto_now=True.
+
+@receiver(post_migrate)
+def create_default_user(sender, **kwargs):
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create(
+            name="Administrador",
+            username="admin",
+            email="admin@example.com",
+            password=make_password("123456"),
+            is_superuser=True,
+            is_staff=True,
+        )
+
 class BaseModel(models.Model):
     id = models.AutoField(
         db_column='id',
@@ -14,7 +29,7 @@ class BaseModel(models.Model):
     )
     updated_at = models.DateTimeField(
         db_column='updated_at',
-        auto_now=True, # Corrected from auto_now_add=True
+        auto_now=True,
         editable=False
     )
 
@@ -23,7 +38,6 @@ class BaseModel(models.Model):
         managed = True
         default_permissions = ('add', 'change', 'delete', 'view')
 
-# User's requested User model.
 class User(AbstractUser, PermissionsMixin, BaseModel):
     name = models.CharField(
         db_column='name',
@@ -49,21 +63,24 @@ class User(AbstractUser, PermissionsMixin, BaseModel):
     )
     groups = models.ManyToManyField(
         Group,
-        through='UserGroup', # Explicit through model as requested
+        through='UserGroup',
         blank=True,
         related_name='user_set',
         related_query_name="user",
     )
 
-    # You must set USERNAME_FIELD to the field you want to use for login.
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'name']
+    def save(self, *args, **kwargs):
+        if not self.password:
+            self.password = make_password("123456")
+        else:
+            if not self.password.startswith("pbkdf2_"):
+                self.password = make_password(self.password)
+        super().save(*args, **kwargs)
 
     class Meta:
         managed = True
         db_table = 'users'
 
-# User's requested explicit through model for User-Group relationship.
 class UserGroup(models.Model):
     id = models.BigAutoField(
         db_column='id',
@@ -71,23 +88,21 @@ class UserGroup(models.Model):
     )
     user = models.ForeignKey(
         'core.User',
-        on_delete=models.CASCADE, # CASCADE is generally safer than DO_NOTHING
+        on_delete=models.CASCADE,
         db_column='id_user',
-        related_name='user_group_relations', # Changed related_name to avoid clash
+        related_name='user_group_relations',
     )
     group = models.ForeignKey(
         Group,
-        on_delete=models.CASCADE, # CASCADE is generally safer than DO_NOTHING
+        on_delete=models.CASCADE,
         db_column='id_group',
-        related_name='user_relations', # Changed related_name to avoid clash
+        related_name='user_relations',
     )
 
     class Meta:
         managed = True
         db_table = 'user_groups'
-        unique_together = ('user', 'group') # Ensures a user isn't in the same group twice
-
-# --- Other Core Models ---
+        unique_together = ('user', 'group')
 
 class AccessProfile(BaseModel):
     """
@@ -127,7 +142,6 @@ class AccessLog(BaseModel):
     action = models.TextField()
     ip_address = models.GenericIPAddressField(db_column='ip_origem', null=True, blank=True)
     was_successful = models.BooleanField(db_column='sucesso')
-    # Note: The 'data_hora' field is covered by 'created_at' from BaseModel.
 
     class Meta:
         db_table = 'logs_acesso'

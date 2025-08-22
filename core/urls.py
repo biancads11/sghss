@@ -1,13 +1,11 @@
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from . import views
+
+from core import views
 
 router = DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'permissions', views.PermissionViewSet)
-router.register(r'user-groups', views.UserGroupViewSet)
+router.register('users', views.UserViewSet)
+router.register('groups', views.GroupViewSet)
+router.register('permissions', views.PermissionViewSet)
+router.register('user-groups', views.UserGroupViewSet)
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls

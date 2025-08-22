@@ -1,9 +1,9 @@
 from rest_framework.routers import DefaultRouter
 
-from professionals.views import HealthProfessionalViewSet, ScheduleViewSet
+from professionals import views
 
 router = DefaultRouter()
-router.register('professional', HealthProfessionalViewSet)
-router.register('schedule', ScheduleViewSet)
+router.register('professional', views.HealthProfessionalViewSet)
+router.register('schedule', views.ScheduleViewSet)
 
 urlpatterns = router.urls

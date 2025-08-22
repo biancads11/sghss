@@ -1,19 +1,18 @@
 from rest_framework import viewsets
-from professionals.filters import HealthProfessionalFilter, ScheduleFilter
-from professionals.models import HealthProfessional, Schedule
-from professionals.serializers import HealthProfessionalSerializer, ScheduleSerializer
+
+from professionals import models, serializers, filters
 
 
 class HealthProfessionalViewSet(viewsets.ModelViewSet):
-    queryset = HealthProfessional.objects.all()
-    serializer_class = HealthProfessionalSerializer
-    filter_class = HealthProfessionalFilter
+    queryset = models.HealthProfessional.objects.all()
+    serializer_class = serializers.HealthProfessionalSerializer
+    filter_class = filters.HealthProfessionalFilter
     ordering_fields = '__all__'
     ordering = ['created_at']
 
 class ScheduleViewSet(viewsets.ModelViewSet):
-    queryset = Schedule.objects.all()
-    serializer_class = ScheduleSerializer
-    filter_class = ScheduleFilter
+    queryset = models.Schedule.objects.all()
+    serializer_class = serializers.ScheduleSerializer
+    filter_class = filters.ScheduleFilter
     ordering_fields = '__all__'
     ordering = ['created_at']

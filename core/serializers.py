@@ -1,11 +1,10 @@
 from django.contrib.auth.models import Group, Permission
 from rest_framework import serializers
-from . import models
+from core import models
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        # Exclui a senha por segurança. Crie um endpoint separado para alteração de senha.
         exclude = ('password',)
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -19,7 +18,6 @@ class PermissionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserGroupSerializer(serializers.ModelSerializer):
-    # Inclui a representação em string do grupo para melhor visualização
     group_name = serializers.CharField(source='group.name', read_only=True)
 
     class Meta:

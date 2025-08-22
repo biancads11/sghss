@@ -31,7 +31,6 @@ class MedicalRecord(BaseModel):
     patient = models.ForeignKey('patients.Patient', on_delete=models.CASCADE, db_column='paciente_id')
     responsible_physician = models.ForeignKey('professionals.HealthProfessional', on_delete=models.SET_NULL, null=True, db_column='medico_responsavel_id')
     general_observations = models.TextField(db_column='observacoes_gerais', null=True, blank=True)
-    # Note: 'data_abertura' is covered by 'created_at' from BaseModel.
 
     class Meta:
         db_table = 'prontuarios'

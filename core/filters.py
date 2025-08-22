@@ -1,5 +1,6 @@
+from django.contrib.auth.models import Group
 from django_filters import rest_framework as filters
-from django.contrib.auth.models import Group, Permission
+
 from . import models
 
 ICONTAINS = 'icontains'
