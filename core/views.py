@@ -28,6 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({"token": str(refresh)}, status=status.HTTP_200_OK)
         return Response({"detail": "Usuário não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = serializers.GroupSerializer
@@ -35,10 +36,12 @@ class GroupViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     ordering = ['name']
 
+
 class PermissionViewSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = serializers.PermissionSerializer
     ordering = ['id']
+
 
 class UserGroupViewSet(viewsets.ModelViewSet):
     queryset = models.UserGroup.objects.all()

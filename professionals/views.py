@@ -10,6 +10,7 @@ class HealthProfessionalViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     ordering = ['created_at']
 
+
 class ScheduleViewSet(viewsets.ModelViewSet):
     queryset = models.Schedule.objects.all()
     serializer_class = serializers.ScheduleSerializer

@@ -17,6 +17,7 @@ def create_default_user(sender, **kwargs):
             is_staff=True,
         )
 
+
 class BaseModel(models.Model):
     id = models.AutoField(
         db_column='id',
@@ -37,6 +38,7 @@ class BaseModel(models.Model):
         abstract = True
         managed = True
         default_permissions = ('add', 'change', 'delete', 'view')
+
 
 class User(AbstractUser, PermissionsMixin, BaseModel):
     name = models.CharField(
@@ -81,6 +83,7 @@ class User(AbstractUser, PermissionsMixin, BaseModel):
         managed = True
         db_table = 'users'
 
+
 class UserGroup(models.Model):
     id = models.BigAutoField(
         db_column='id',
@@ -104,6 +107,7 @@ class UserGroup(models.Model):
         db_table = 'user_groups'
         unique_together = ('user', 'group')
 
+
 class AccessProfile(BaseModel):
     """
     Corresponds to 'perfis_acesso'
@@ -117,6 +121,7 @@ class AccessProfile(BaseModel):
         db_table = 'perfis_acesso'
         verbose_name = 'Access Profile'
         verbose_name_plural = 'Access Profiles'
+
 
 class AuthenticationToken(BaseModel):
     """
@@ -132,6 +137,7 @@ class AuthenticationToken(BaseModel):
         db_table = 'tokens_autenticacao'
         verbose_name = 'Authentication Token'
         verbose_name_plural = 'Authentication Tokens'
+
 
 class AccessLog(BaseModel):
     """

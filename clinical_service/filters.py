@@ -1,6 +1,5 @@
 from django_filters import rest_framework as filters
-from .models import Appointment, Consultation, Examination, Prescription
-
+from clinical_service import models
 
 class AppointmentFilter(filters.FilterSet):
     patient = filters.NumberFilter(field_name='patient__id')
@@ -9,7 +8,7 @@ class AppointmentFilter(filters.FilterSet):
     end_date = filters.DateFilter(field_name='timestamp__date', lookup_expr='lte')
 
     class Meta:
-        model = Appointment
+        model = models.Appointment
         fields = ['patient', 'professional', 'appointment_type', 'status', 'start_date', 'end_date']
 
 
@@ -17,7 +16,7 @@ class ConsultationFilter(filters.FilterSet):
     appointment = filters.NumberFilter(field_name='appointment__id')
 
     class Meta:
-        model = Consultation
+        model = models.Consultation
         fields = ['appointment', 'specialty', 'status']
 
 
@@ -27,7 +26,7 @@ class ExaminationFilter(filters.FilterSet):
     request_date = filters.DateFilter(field_name='request_date')
 
     class Meta:
-        model = Examination
+        model = models.Examination
         fields = ['patient', 'requesting_professional', 'exam_type', 'request_date']
 
 
@@ -36,5 +35,5 @@ class PrescriptionFilter(filters.FilterSet):
     professional = filters.NumberFilter(field_name='professional__id')
 
     class Meta:
-        model = Prescription
+        model = models.Prescription
         fields = ['appointment', 'professional']

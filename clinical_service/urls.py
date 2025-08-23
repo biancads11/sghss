@@ -1,11 +1,11 @@
 from rest_framework.routers import DefaultRouter
 
-from clinical_service.views import AppointmentViewSet, ConsultationViewSet, ExaminationViewSet, PrescriptionViewSet
+from clinical_service import views
 
 router = DefaultRouter()
-router.register('appointment', AppointmentViewSet)
-router.register('consultation', ConsultationViewSet)
-router.register('examination', ExaminationViewSet)
-router.register('Prescription', PrescriptionViewSet)
+router.register('appointment', views.AppointmentViewSet)
+router.register('consultation', views.ConsultationViewSet)
+router.register('examination', views.ExaminationViewSet)
+router.register('Prescription', views.PrescriptionViewSet)
 
 urlpatterns = router.urls

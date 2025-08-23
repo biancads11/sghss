@@ -1,20 +1,19 @@
 from rest_framework import viewsets
-from .filters import PatientFilter, MedicalRecordFilter
-from .models import Patient, MedicalRecord
-from .serializers import PatientSerializer, MedicalRecordSerializer
+
+from patients import models, serializers, filters
 
 
 class PatientViewSet(viewsets.ModelViewSet):
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
-    filter_class = PatientFilter
+    queryset = models.Patient.objects.all()
+    serializer_class = serializers.PatientSerializer
+    filter_class = filters.PatientFilter
     ordering_fields = '__all__'
     ordering = ['created_at']
 
 
 class MedicalRecordViewSet(viewsets.ModelViewSet):
-    queryset = MedicalRecord.objects.all()
-    serializer_class = MedicalRecordSerializer
-    filterset_class = MedicalRecordFilter
+    queryset = models.MedicalRecord.objects.all()
+    serializer_class = serializers.MedicalRecordSerializer
+    filterset_class = filters.MedicalRecordFilter
     ordering_fields = '__all__'
     ordering = ['created_at']

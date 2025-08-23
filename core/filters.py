@@ -5,6 +5,7 @@ from . import models
 
 ICONTAINS = 'icontains'
 
+
 class UserFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr=ICONTAINS)
     username = filters.CharFilter(field_name='username', lookup_expr=ICONTAINS)
@@ -14,12 +15,14 @@ class UserFilter(filters.FilterSet):
         model = models.User
         fields = ['name', 'username', 'email']
 
+
 class GroupFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr=ICONTAINS)
 
     class Meta:
         model = Group
         fields = ['name']
+
 
 class UserGroupFilter(filters.FilterSet):
     user = filters.NumberFilter(field_name='user__id')

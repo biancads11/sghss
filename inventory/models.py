@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import BaseModel
 
+
 class Supply(BaseModel):
     """
     Corresponds to 'suprimentos'
@@ -19,15 +20,18 @@ class Supply(BaseModel):
         verbose_name = 'Supply'
         verbose_name_plural = 'Supplies'
 
+
 class StockMovement(BaseModel):
     """
     Corresponds to 'movimentacoes_estoque'
     Logs the entry or exit of supplies from inventory.
     """
     supply = models.ForeignKey('inventory.Supply', on_delete=models.CASCADE, db_column='suprimento_id')
-    professional = models.ForeignKey('professionals.HealthProfessional', on_delete=models.SET_NULL, null=True, db_column='profissional_id')
-    movement_type = models.CharField(db_column='tipo', max_length=20) # e.g., 'Entry', 'Exit'
+    professional = models.ForeignKey('professionals.HealthProfessional', on_delete=models.SET_NULL, null=True,
+                                     db_column='profissional_id')
+    movement_type = models.CharField(db_column='tipo', max_length=20)  # e.g., 'Entry', 'Exit'
     quantity = models.IntegerField()
+
     # Note: 'data' is covered by 'created_at' from BaseModel.
 
     class Meta:

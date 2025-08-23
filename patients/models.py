@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import BaseModel
 
+
 class Patient(BaseModel):
     """
     Corresponds to 'pacientes'
@@ -23,13 +24,15 @@ class Patient(BaseModel):
         verbose_name = 'Patient'
         verbose_name_plural = 'Patients'
 
+
 class MedicalRecord(BaseModel):
     """
     Corresponds to 'prontuarios'
     Central medical record for a patient.
     """
     patient = models.ForeignKey('patients.Patient', on_delete=models.CASCADE, db_column='paciente_id')
-    responsible_physician = models.ForeignKey('professionals.HealthProfessional', on_delete=models.SET_NULL, null=True, db_column='medico_responsavel_id')
+    responsible_physician = models.ForeignKey('professionals.HealthProfessional', on_delete=models.SET_NULL, null=True,
+                                              db_column='medico_responsavel_id')
     general_observations = models.TextField(db_column='observacoes_gerais', null=True, blank=True)
 
     class Meta:

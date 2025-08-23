@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import BaseModel
 
+
 class HospitalUnit(BaseModel):
     """
     Corresponds to 'unidades_hospitalares'
@@ -19,6 +20,7 @@ class HospitalUnit(BaseModel):
         verbose_name = 'Hospital Unit'
         verbose_name_plural = 'Hospital Units'
 
+
 class Bed(BaseModel):
     """
     Corresponds to 'leitos'
@@ -27,14 +29,16 @@ class Bed(BaseModel):
     hospital_unit = models.ForeignKey('infrastructure.HospitalUnit', on_delete=models.CASCADE, db_column='unidade_id')
     number = models.CharField(max_length=10)
     bed_type = models.CharField(db_column='tipo', max_length=50)
-    status = models.CharField(max_length=20) # e.g., 'Available', 'Occupied', 'Maintenance'
-    occupying_patient = models.ForeignKey('patients.Patient', on_delete=models.SET_NULL, null=True, blank=True, db_column='paciente_ocupante_id')
+    status = models.CharField(max_length=20)  # e.g., 'Available', 'Occupied', 'Maintenance'
+    occupying_patient = models.ForeignKey('patients.Patient', on_delete=models.SET_NULL, null=True, blank=True,
+                                          db_column='paciente_ocupante_id')
     occupation_date = models.DateField(db_column='data_ocupacao', null=True, blank=True)
 
     class Meta:
         db_table = 'leitos'
         verbose_name = 'Bed'
         verbose_name_plural = 'Beds'
+
 
 class Hospitalization(BaseModel):
     """
