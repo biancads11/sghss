@@ -1,4 +1,6 @@
 from django.db import models
+from simple_history.models import HistoricalRecords
+
 from core.models import BaseModel
 
 
@@ -33,6 +35,7 @@ class Consultation(BaseModel):
     location = models.CharField(db_column='local', max_length=100, null=True, blank=True)
     consultation_type = models.CharField(db_column='tipo_consulta', max_length=20, null=True, blank=True)
     status = models.CharField(max_length=30, null=True, blank=True)
+    history = HistoricalRecords(table_name='"history"."consultas"')
 
     class Meta:
         db_table = 'consultas'

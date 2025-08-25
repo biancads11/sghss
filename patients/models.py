@@ -1,4 +1,6 @@
 from django.db import models
+from simple_history.models import HistoricalRecords
+
 from core.models import BaseModel
 
 
@@ -15,6 +17,7 @@ class Patient(BaseModel):
     email = models.EmailField(max_length=100, null=True, blank=True)
     address = models.TextField(db_column='endereco', null=True, blank=True)
     emergency_details = models.TextField(db_column='dados_emergencia', null=True, blank=True)
+    history = HistoricalRecords(table_name='"history"."pacientes"')
 
     def __str__(self):
         return self.name
@@ -34,6 +37,7 @@ class MedicalRecord(BaseModel):
     responsible_physician = models.ForeignKey('professionals.HealthProfessional', on_delete=models.SET_NULL, null=True,
                                               db_column='medico_responsavel_id')
     general_observations = models.TextField(db_column='observacoes_gerais', null=True, blank=True)
+    history = HistoricalRecords(table_name='"history"."prontuarios"')
 
     class Meta:
         db_table = 'prontuarios'

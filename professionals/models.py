@@ -1,4 +1,6 @@
 from django.db import models
+from simple_history.models import HistoricalRecords
+
 from core.models import BaseModel
 
 
@@ -15,6 +17,7 @@ class HealthProfessional(BaseModel):
     phone = models.CharField(db_column='telefone', max_length=20, null=True, blank=True)
     hospital_unit = models.ForeignKey('infrastructure.HospitalUnit', on_delete=models.SET_NULL, null=True,
                                       db_column='unidade_id')
+    history = HistoricalRecords(table_name='"history"."profissionais_saude"')
 
     def __str__(self):
         return f"{self.name} ({self.specialty})"

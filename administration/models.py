@@ -1,4 +1,5 @@
 from django.db import models
+
 from core.models import BaseModel
 
 
@@ -14,8 +15,6 @@ class Audit(BaseModel):
     data_before = models.JSONField(db_column='dados_antes', null=True, blank=True)
     data_after = models.JSONField(db_column='dados_depois', null=True, blank=True)
 
-    # Note: 'data_hora' is covered by 'created_at' from BaseModel.
-
     class Meta:
         db_table = 'auditorias'
         verbose_name = 'Audit'
@@ -30,8 +29,6 @@ class Backup(BaseModel):
     backup_type = models.CharField(db_column='tipo', max_length=50)
     storage_location = models.TextField(db_column='local_armazenamento')
     status = models.CharField(max_length=30)
-
-    # Note: 'data_backup' is covered by 'created_at' from BaseModel.
 
     class Meta:
         db_table = 'backups'

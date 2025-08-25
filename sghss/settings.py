@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'administration.apps.AdministrationConfig',
     'corsheaders',
     'rest_framework_simplejwt',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True

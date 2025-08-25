@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin, Group
 from django.db import models
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
+from simple_history.models import HistoricalRecords
 
 
 @receiver(post_migrate)
@@ -70,6 +71,7 @@ class User(AbstractUser, PermissionsMixin, BaseModel):
         related_name='user_set',
         related_query_name="user",
     )
+    history = HistoricalRecords(table_name='"history"."usuarios"')
 
     def save(self, *args, **kwargs):
         if not self.password:
@@ -81,7 +83,7 @@ class User(AbstractUser, PermissionsMixin, BaseModel):
 
     class Meta:
         managed = True
-        db_table = 'users'
+        db_table = 'usuarios'
 
 
 class UserGroup(models.Model):
@@ -137,19 +139,3 @@ class AuthenticationToken(BaseModel):
         db_table = 'tokens_autenticacao'
         verbose_name = 'Authentication Token'
         verbose_name_plural = 'Authentication Tokens'
-
-
-class AccessLog(BaseModel):
-    """
-    Corresponds to 'logs_acesso'
-    Logs user access attempts.
-    """
-    user = models.ForeignKey('core.User', on_delete=models.SET_NULL, null=True, db_column='usuario_id')
-    action = models.TextField()
-    ip_address = models.GenericIPAddressField(db_column='ip_origem', null=True, blank=True)
-    was_successful = models.BooleanField(db_column='sucesso')
-
-    class Meta:
-        db_table = 'logs_acesso'
-        verbose_name = 'Access Log'
-        verbose_name_plural = 'Access Logs'
