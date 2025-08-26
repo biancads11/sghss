@@ -20,20 +20,9 @@ def create_default_user(sender, **kwargs):
 
 
 class BaseModel(models.Model):
-    id = models.AutoField(
-        db_column='id',
-        primary_key=True,
-    )
-    created_at = models.DateTimeField(
-        db_column='created_at',
-        auto_now_add=True,
-        editable=False
-    )
-    updated_at = models.DateTimeField(
-        db_column='updated_at',
-        auto_now=True,
-        editable=False
-    )
+    id = models.AutoField(db_column='id',primary_key=True)
+    created_at = models.DateTimeField(db_column='created_at',auto_now_add=True,editable=False)
+    updated_at = models.DateTimeField(db_column='updated_at',auto_now=True,editable=False)
 
     class Meta:
         abstract = True
@@ -42,35 +31,11 @@ class BaseModel(models.Model):
 
 
 class User(AbstractUser, PermissionsMixin, BaseModel):
-    name = models.CharField(
-        db_column='name',
-        max_length=255,
-        null=False,
-    )
-    username = models.CharField(
-        db_column='username',
-        max_length=255,
-        unique=True,
-        null=False,
-    )
-    email = models.EmailField(
-        db_column='email',
-        max_length=255,
-        unique=True,
-        null=False,
-    )
-    password = models.CharField(
-        db_column='password',
-        max_length=255,
-        null=False,
-    )
-    groups = models.ManyToManyField(
-        Group,
-        through='UserGroup',
-        blank=True,
-        related_name='user_set',
-        related_query_name="user",
-    )
+    name = models.CharField(db_column='name',max_length=255,null=False)
+    username = models.CharField(db_column='username',max_length=255,unique=True,null=False)
+    email = models.EmailField(db_column='email',max_length=255,unique=True,null=False)
+    password = models.CharField(db_column='password',max_length=255,null=False)
+    groups = models.ManyToManyField(Group,through='UserGroup',blank=True,related_name='user_set',related_query_name="user")
     history = HistoricalRecords(table_name='"history"."usuarios"')
 
     def save(self, *args, **kwargs):
@@ -87,22 +52,9 @@ class User(AbstractUser, PermissionsMixin, BaseModel):
 
 
 class UserGroup(models.Model):
-    id = models.BigAutoField(
-        db_column='id',
-        primary_key=True
-    )
-    user = models.ForeignKey(
-        'core.User',
-        on_delete=models.CASCADE,
-        db_column='id_user',
-        related_name='user_group_relations',
-    )
-    group = models.ForeignKey(
-        Group,
-        on_delete=models.CASCADE,
-        db_column='id_group',
-        related_name='user_relations',
-    )
+    id = models.BigAutoField(db_column='id',primary_key=True)
+    user = models.ForeignKey('core.User',on_delete=models.CASCADE,db_column='id_user',related_name='user_group_relations')
+    group = models.ForeignKey(Group,on_delete=models.CASCADE,db_column='id_group',related_name='user_relations')
 
     class Meta:
         managed = True

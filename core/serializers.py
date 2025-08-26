@@ -9,6 +9,14 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ('password',)
 
 
+class HistoricalUserSerializer(serializers.ModelSerializer):
+    history_user_name = serializers.CharField(source='history_user.name', read_only=True, default=None)
+
+    class Meta:
+        model = models.User.history.model
+        exclude = ('password',)
+
+
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group

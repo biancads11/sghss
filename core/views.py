@@ -28,6 +28,16 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({"token": str(refresh)}, status=status.HTTP_200_OK)
         return Response({"detail": "Usuário não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=['get'], url_path='history')
+    def get_history(self, request, pk=None):
+        """
+        Returns the change history.
+        """
+        user = self.get_object()
+        history = user.history.all()
+        serializer = serializers.HistoricalUserSerializer(history, many=True)
+        return Response(serializer.data)
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
